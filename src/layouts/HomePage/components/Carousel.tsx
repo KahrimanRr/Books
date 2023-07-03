@@ -2,7 +2,7 @@ import { ReturnBook } from "./ReturnBook";
 import { useState, useEffect } from "react";
 import BookModel from "../../../models/BookModel";
 import { error } from "console";
-import { SprinnerLoading } from "../../../Utils/SpinnerLoading";
+import { SpinnerLoading } from "../../../Utils/SpinnerLoading";
 
 export const Carousel = () => {
   const [books, setBooks] = useState<BookModel[]>([]);
@@ -47,7 +47,7 @@ export const Carousel = () => {
   }, []);
 
   if (isLoading) {
-    return <SprinnerLoading />;
+    return <SpinnerLoading />;
   }
   if (httpError) {
     return (
