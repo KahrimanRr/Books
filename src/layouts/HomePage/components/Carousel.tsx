@@ -25,14 +25,14 @@ export const Carousel = () => {
 
       for (const key of responseData) {
         loadedBooks.push({
-          id: responseData[key].id,
-          title: responseData[key].title,
-          author: responseData[key].author,
-          description: responseData[key].description,
-          copies: responseData[key].copies,
-          copiesAvailable: responseData[key].copiesAvailable,
-          category: responseData[key].category,
-          img: responseData[key].img,
+          id: key.id,
+          title: key.title,
+          author: key.author,
+          description: key.description,
+          copies: key.copies,
+          copiesAvailable: key.copiesAvailable,
+          category: key.category,
+          img: key.img,
         });
       }
       setBooks(loadedBooks);
@@ -74,22 +74,24 @@ export const Carousel = () => {
         <div className="carousel-inner">
           <div className="carousel-item active">
             <div className="row d-flex justify-content-center align-items-center">
-              <ReturnBook />
-              <ReturnBook />
-              <ReturnBook />
+              {books.slice(0, 3).map((book) => (
+                <ReturnBook book={book} key={book.id} />
+              ))}
             </div>
           </div>
           <div className="carousel-item">
             <div className="row d-flex justify-content-center align-items-center">
-              <ReturnBook />
-              <ReturnBook />
-              <ReturnBook />
+              {books.slice(3, 6).map((book) => (
+                <ReturnBook book={book} key={book.id} />
+              ))}
             </div>
           </div>
 
           <div className="carousel-item ">
             <div className="row d-flex justify-content-center align-items-center">
-              <ReturnBook />
+              {books.slice(6, 9).map((book) => (
+                <ReturnBook book={book} key={book.id} />
+              ))}
             </div>
           </div>
         </div>
@@ -121,7 +123,7 @@ export const Carousel = () => {
       {/**Mobile */}
       <div className=" d-lg-none mt-3">
         <div className=" row d-flex justify-content-center align-content-center">
-          <ReturnBook />
+          <ReturnBook book={books[7]} key={books[7].id} />
         </div>
       </div>
       <div className="homepage-carousel-title mt-3">
