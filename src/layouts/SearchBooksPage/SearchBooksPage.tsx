@@ -8,17 +8,25 @@ export const SearchBooksPage = () => {
   const [books, setBooks] = useState<BookModel[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [httpError, setHttpError] = useState(null);
+  /**Pagination */
   const [currentPage, setCurrentPage] = useState(1);
   const [booksPerPage] = useState(5);
   const [totalAmountOfBooks, setTotalAmountOfBooks] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
+  /** Searching*/
+  const [search, SetSearch] = useState("");
+  const [searchUrl, SetSearchUrl] = useState("");
 
   useEffect(() => {
     const fetchBooks = async () => {
       const baseUrl: string = "http://localhost:8080/api/books";
-      const url: string = `${baseUrl}?page=${
-        currentPage - 1
-      }&size=${booksPerPage}`;
+      let url: string = "";
+
+      /**searching part */
+      if (searchUrl === " ") {
+        url = `${baseUrl}?page=${currentPage - 1}&size=${booksPerPage}`;
+      } else url = baseUrl + searchUrl;
+
       const response = await fetch(url);
 
       if (!response.ok) {
@@ -55,7 +63,7 @@ export const SearchBooksPage = () => {
       setHttpError(error.message);
     });
     window.scrollTo(0, 0);
-  }, [currentPage]);
+  }, [currentPage, searchUrl]);
 
   if (isLoading) {
     return <SpinnerLoading />;
@@ -67,6 +75,16 @@ export const SearchBooksPage = () => {
       </div>
     );
   }
+
+  const searchHandleChange = () => {
+    if (search === " ") {
+      SetSearchUrl(" ");
+    } else {
+      SetSearchUrl(
+        `/search/findByTitleContaining?title=${search}&page=0&size=${booksPerPage}`
+      );
+    }
+  };
 
   const indexOfLastBook: number = currentPage * booksPerPage;
   const indexofFristBook: number = indexOfLastBook - booksPerPage;
@@ -88,8 +106,14 @@ export const SearchBooksPage = () => {
                   type=" search"
                   placeholder=" Search"
                   aria-labelledby=" Search"
+                  onChange={(e) => SetSearch(e.target.value)}
                 />{" "}
-                <button className="btn btn-outline-success">Search</button>
+                <button
+                  className="btn btn-outline-success"
+                  onClick={() => searchHandleChange()}
+                >
+                  Search
+                </button>
               </div>
             </div>
             <div className="col-4">
@@ -137,9 +161,11 @@ export const SearchBooksPage = () => {
             </div>
           </div>
           <div className="mt-3">
-            <h5>Number of results: (22)</h5>
+            <h5>Number of results: ({totalAmountOfBooks})</h5>
           </div>
-          <p>1 to 5 22 items:</p>
+          <p>
+            {indexofFristBook + 1} to {lastitem} of {totalAmountOfBooks} items:
+          </p>
           {books.map((book) => (
             <SearchBook book={book} key={book.id} />
           ))}
