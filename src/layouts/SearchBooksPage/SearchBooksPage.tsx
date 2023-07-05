@@ -88,6 +88,26 @@ export const SearchBooksPage = () => {
     }
   };
 
+  /**CATEGORY  */
+
+  const categoryField = (value: string) => {
+    if (
+      value.toLocaleLowerCase() === "fe" ||
+      value.toLocaleLowerCase() === "be" ||
+      value.toLocaleLowerCase() === "data" ||
+      value.toLocaleLowerCase() === "devops"
+    ) {
+      setCategorySelection(value);
+      SetSearchUrl(
+        `/search/findByCategory?category=${value}&page=0&size=${booksPerPage}`
+      );
+    } else {
+      setCategorySelection("All");
+      SetSearchUrl(`?page=0&size=${booksPerPage}`);
+    }
+  };
+
+  /**Pagination */
   const indexOfLastBook: number = currentPage * booksPerPage;
   const indexofFirstBook: number = indexOfLastBook - booksPerPage;
   let lastItem =
@@ -127,33 +147,33 @@ export const SearchBooksPage = () => {
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
                 >
-                  Category
+                  {categorySelection}
                 </button>
                 <ul
                   className="dropdown-menu"
                   aria-labelledby="dropdownMenuButton1"
                 >
-                  <li>
+                  <li onClick={() => categoryField("All")}>
                     <a className="dropdown-item" href="#">
                       All
                     </a>
                   </li>
-                  <li>
+                  <li onClick={() => categoryField("FE")}>
                     <a className="dropdown-item" href="#">
                       Front End
                     </a>
                   </li>
-                  <li>
+                  <li onClick={() => categoryField("BE")}>
                     <a className="dropdown-item" href="#">
                       Back End
                     </a>
                   </li>
-                  <li>
+                  <li onClick={() => categoryField("Data")}>
                     <a className="dropdown-item" href="#">
                       Data
                     </a>
                   </li>
-                  <li>
+                  <li onClick={() => categoryField("DevOps")}>
                     <a className="dropdown-item" href="#">
                       DevOps
                     </a>
@@ -181,7 +201,6 @@ export const SearchBooksPage = () => {
               <a
                 className="btn main-color btn-md px-4 me-md-2 fw-bold text-white"
                 type="button"
-                href=""
               >
                 Library Services
               </a>
