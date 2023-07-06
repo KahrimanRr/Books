@@ -5,18 +5,23 @@ import { NavBar } from "./layouts/NavbarAndFooter/Navbar";
 import { Footer } from "./layouts/NavbarAndFooter/Footer";
 import { Homepage } from "./layouts/HomePage/Homepage";
 import { SearchBooksPage } from "./layouts/SearchBooksPage/SearchBooksPage";
-import { Route } from "react-router-dom";
+import { Redirect, Route, Switch } from "react-router-dom";
 
 export const App = () => {
   return (
     <div>
       <NavBar />
-      <Route path="/">
-        <Homepage />
-      </Route>
-      <Route path="/search">
-        <SearchBooksPage />
-      </Route>
+      <Switch>
+        <Route path="/" exact>
+          <Redirect to="/home" />
+        </Route>
+        <Route path="/home">
+          <Homepage />
+        </Route>
+        <Route path="/search">
+          <SearchBooksPage />
+        </Route>
+      </Switch>
       <Footer />
     </div>
   );
