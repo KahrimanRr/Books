@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import ReviewModel from "../../models/ReviewModel";
+import { Review } from "../../Utils/Review";
 
 export const LatestReviews: React.FC<{
   reviews: ReviewModel[];
@@ -12,7 +13,7 @@ export const LatestReviews: React.FC<{
         <h2>Latest Reviews:</h2>
       </div>
       <div className="col-sm-10 col-md-10">
-        {props.reviews.lenght > 0 ? (
+        {props.reviews.length > 0 ? (
           <>
             {props.reviews.slice(0, 3).map((eachReview) => (
               /**todo need to add */ <Review

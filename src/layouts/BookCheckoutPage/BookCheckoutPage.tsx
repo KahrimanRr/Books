@@ -4,7 +4,7 @@ import { SpinnerLoading } from "../../Utils/SpinnerLoading";
 import { StarReview } from "../../Utils/StarsReview";
 import { CheckoutAndReviewBox } from "./CheckoutAndReviewBox";
 import ReviewModel from "../../models/ReviewModel";
-import { error } from "console";
+import { LatestReviews } from "./LatestReviews";
 
 export const BookCheckoutPage = () => {
   const [book, setBook] = useState<BookModel>();
@@ -35,7 +35,6 @@ export const BookCheckoutPage = () => {
         title: responseJson.title,
         author: responseJson.author,
         description: responseJson.description,
-
         copies: responseJson.copies,
         copiesAvailable: responseJson.copiesAvailable,
         category: responseJson.category,
@@ -55,7 +54,7 @@ export const BookCheckoutPage = () => {
   /**Review  */
   useEffect(() => {
     const fetchBookReviews = async () => {
-      const reviewUrl: string = `http://localhosst:8080/api/reviews/search/findByBookId?bookId=${bookId}`;
+      const reviewUrl: string = `http://localhost:8080/api/reviews/search/findByBookId?bookId=${bookId}`;
 
       const responseReviews = await fetch(reviewUrl);
 
@@ -135,6 +134,7 @@ export const BookCheckoutPage = () => {
           <CheckoutAndReviewBox book={book} mobile={false} />
         </div>
         <hr />
+        <LatestReviews reviews={reviews} bookId={book?.id} mobile={false} />
       </div>
       <div className=" container d-lg-none mt-5">
         <div className=" d-flex justify-content-center align-items-center">
@@ -160,6 +160,7 @@ export const BookCheckoutPage = () => {
         </div>
         <CheckoutAndReviewBox book={book} mobile={true} />
         <hr />
+        <LatestReviews reviews={reviews} bookId={book?.id} mobile={true} />
       </div>
     </div>
   );

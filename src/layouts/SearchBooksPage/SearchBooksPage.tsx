@@ -13,7 +13,7 @@ export const SearchBooksPage = () => {
   const [booksPerPage] = useState(5);
   const [totalAmountOfBooks, setTotalAmountOfBooks] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
-  /** Searching*/
+  /** Searching find by title */
   const [search, SetSearch] = useState("");
   const [searchUrl, SetSearchUrl] = useState("");
   /**category  */
@@ -82,6 +82,8 @@ export const SearchBooksPage = () => {
       </div>
     );
   }
+
+  /**searching function */
 
   const searchHandleChange = () => {
     setCurrentPage(1);
