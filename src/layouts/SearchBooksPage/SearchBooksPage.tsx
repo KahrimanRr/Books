@@ -125,6 +125,7 @@ export const SearchBooksPage = () => {
     booksPerPage * currentPage <= totalAmountOfBooks
       ? booksPerPage * currentPage
       : totalAmountOfBooks;
+
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   return (
