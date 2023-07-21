@@ -121,7 +121,7 @@ export const BookCheckoutPage = () => {
           },
         };
         const currentLoansCountResponse = await fetch(url, requestOptions);
-        if (currentLoansCountResponse.ok) {
+        if (!currentLoansCountResponse.ok) {
           throw new Error("someth wnt wrong");
         }
         const currentLoansCountResponseJson =
@@ -171,7 +171,11 @@ export const BookCheckoutPage = () => {
               <StarReview rating={totalStars} size={32} />
             </div>
           </div>
-          <CheckoutAndReviewBox book={book} mobile={false} />
+          <CheckoutAndReviewBox
+            book={book}
+            mobile={false}
+            currentLoansCount={currentLoansCount}
+          />
         </div>
         <hr />
         <LatestReviews reviews={reviews} bookId={book?.id} mobile={false} />
@@ -198,7 +202,11 @@ export const BookCheckoutPage = () => {
             <StarReview rating={3.5} size={32} />
           </div>
         </div>
-        <CheckoutAndReviewBox book={book} mobile={true} />
+        <CheckoutAndReviewBox
+          book={book}
+          mobile={true}
+          currentLoansCount={currentLoansCount}
+        />
         <hr />
         <LatestReviews reviews={reviews} bookId={book?.id} mobile={true} />
       </div>
