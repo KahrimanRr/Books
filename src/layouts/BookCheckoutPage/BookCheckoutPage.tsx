@@ -5,13 +5,15 @@ import { StarReview } from "../../Utils/StarsReview";
 import { CheckoutAndReviewBox } from "./CheckoutAndReviewBox";
 import ReviewModel from "../../models/ReviewModel";
 import { LatestReviews } from "./LatestReviews";
+import { useOktaAuth } from "@okta/okta-react";
+import { error } from "console";
 
 export const BookCheckoutPage = () => {
   const [book, setBook] = useState<BookModel>();
   const [isLoading, setIsLoading] = useState(true);
   const [httpError, setHttpError] = useState(null);
 
-  /**localhos:3000/checkout/<bookID>, 0 1 2 index get the last one, 2 */
+  /**localhost:3000/checkout/<bookID>, 0 1 2 index get the last one, 2 */
   const bookId = window.location.pathname.split("/")[2];
 
   /**Review */
@@ -20,6 +22,14 @@ export const BookCheckoutPage = () => {
   const [totalStars, setTotalStars] = useState(0);
   const [isLoadingReview, setIsLoadingReview] = useState(true);
 
+  const { authState } = useOktaAuth();
+
+  //LoansCount
+  const [currentLoansCount, setCurrentLoansCount] = useState(0);
+  const [isLoadingCurrentLoansCount, setIsLoadingCurrentLoansCount] =
+    useState(true);
+
+  //fetching books*/
   useEffect(() => {
     const fetchBook = async () => {
       const baseUrl: string = `http://localhost:8080/api/books/${bookId}`;
@@ -95,6 +105,16 @@ export const BookCheckoutPage = () => {
       setHttpError(error.message);
     });
   }, []);
+
+  //Loans count*/
+
+  useEffect(() => {
+    const fetchUserCurrentLoansCount = async () => {};
+    fetchUserCurrentLoansCount().catch((error: any) => {
+      setIsLoadingCurrentLoansCount(false);
+      setHttpError(error.message);
+    });
+  }, [authState]);
 
   if (isLoading || isLoadingReview) {
     return <SpinnerLoading />;
