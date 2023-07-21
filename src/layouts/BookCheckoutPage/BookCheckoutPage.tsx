@@ -116,7 +116,7 @@ export const BookCheckoutPage = () => {
         const requestOptions = {
           method: "GET",
           headers: {
-            Authorization: `Bearer${authState.accessToken?.accessToken}`,
+            Authorization: `Bearer ${authState.accessToken?.accessToken}`,
             "Content-Type": "application/json",
           },
         };
