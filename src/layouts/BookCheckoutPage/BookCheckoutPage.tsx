@@ -30,6 +30,10 @@ export const BookCheckoutPage = () => {
   const [isLoadingCurrentLoansCount, setIsLoadingCurrentLoansCount] =
     useState(true);
 
+  //is book checked out ?
+  const [isCheckedOut, setIsCheckedOut] = useState(false);
+  const [isLoadingBookCheckedOut, setIsLoadingBookCheckedOut] = useState(true);
+
   //fetching books*/
   useEffect(() => {
     const fetchBook = async () => {
@@ -110,6 +114,14 @@ export const BookCheckoutPage = () => {
   //Loans count*/
 
   useEffect(() => {
+    const fetchUserCheckedOutBook = async () => {};
+    fetchUserCheckedOutBook().catch((error: any) => {
+      setIsLoadingBookCheckedOut(false);
+      setHttpError(error.message);
+    });
+  }, [authState]);
+
+  useEffect(() => {
     const fetchUserCurrentLoansCount = async () => {
       if (authState && authState.isAuthenticated) {
         const url = `http://localhost:8080/api/books/secure/currentloans/count`;
@@ -135,6 +147,8 @@ export const BookCheckoutPage = () => {
       setHttpError(error.message);
     });
   }, [authState]);
+
+  //is book checked out
 
   if (isLoading || isLoadingReview || isLoadingCurrentLoansCount) {
     return <SpinnerLoading />;
