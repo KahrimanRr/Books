@@ -112,15 +112,6 @@ export const BookCheckoutPage = () => {
   }, []);
 
   //Loans count*/
-
-  useEffect(() => {
-    const fetchUserCheckedOutBook = async () => {};
-    fetchUserCheckedOutBook().catch((error: any) => {
-      setIsLoadingBookCheckedOut(false);
-      setHttpError(error.message);
-    });
-  }, [authState]);
-
   useEffect(() => {
     const fetchUserCurrentLoansCount = async () => {
       if (authState && authState.isAuthenticated) {
@@ -149,8 +140,39 @@ export const BookCheckoutPage = () => {
   }, [authState]);
 
   //is book checked out
+  useEffect(() => {
+    const fetchUserCheckedOutBook = async () => {
+      if (authState && authState.isAuthenticated) {
+        const url = `http://localhost:8080/api/books/secure/ischeckout/byuser/?bookId=${bookId}`;
+        const requestOptions = {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${authState.accessToken?.accessToken}`,
+            "Content-Type": "application/json",
+          },
+        };
+        const bookCheckedOut = await fetch(url, requestOptions);
 
-  if (isLoading || isLoadingReview || isLoadingCurrentLoansCount) {
+        if (!bookCheckedOut) {
+          throw new Error("Error in checked outing the page");
+        }
+        const bookCheckedOutResponseJson = await bookCheckedOut.json();
+        setIsCheckedOut(bookCheckedOutResponseJson);
+      }
+      setIsLoadingBookCheckedOut(false);
+    };
+    fetchUserCheckedOutBook().catch((error: any) => {
+      setIsLoadingBookCheckedOut(false);
+      setHttpError(error.message);
+    });
+  }, [authState]);
+
+  if (
+    isLoading ||
+    isLoadingReview ||
+    isLoadingCurrentLoansCount ||
+    isLoadingBookCheckedOut
+  ) {
     return <SpinnerLoading />;
   }
   if (httpError) {
