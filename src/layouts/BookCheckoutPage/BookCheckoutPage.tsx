@@ -64,7 +64,7 @@ export const BookCheckoutPage = () => {
       setIsLoading(false);
       setHttpError(error.message);
     });
-  }, []);
+  }, [isCheckedOut]);
 
   /**Review  */
   useEffect(() => {
@@ -137,7 +137,7 @@ export const BookCheckoutPage = () => {
       setIsLoadingCurrentLoansCount(false);
       setHttpError(error.message);
     });
-  }, [authState]);
+  }, [authState, isCheckedOut]);
 
   //is book checked out
   useEffect(() => {
@@ -183,6 +183,23 @@ export const BookCheckoutPage = () => {
     );
   }
 
+  //adding functionality to checkout//
+
+  async function checkoutBook() {
+    const url = `http://localhost:8080/api/books/secure/checkout/?bookId=${bookId}`;
+    const requestOptions = {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${authState?.accessToken?.accessToken}`,
+        "Content-Type": "application/json",
+      },
+    };
+    const checkoutResponse = await fetch(url, requestOptions);
+    if (!checkoutResponse.ok) {
+      throw new Error("something is wrong with functionality of checkout");
+    }
+    setIsCheckedOut(true);
+  }
   return (
     <div>
       <div className=" container d-none d-lg-block">

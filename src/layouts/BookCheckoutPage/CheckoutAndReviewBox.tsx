@@ -15,7 +15,7 @@ export const CheckoutAndReviewBox: React.FC<{
       } else if (props.isCheckedOut) {
         return (
           <p>
-            <b>Book checked out , enjoy</b>
+            <b>Book checked out, enjoy</b>
           </p>
         );
       } else if (!props.isCheckedOut) {
