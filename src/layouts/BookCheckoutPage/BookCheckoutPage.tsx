@@ -230,6 +230,7 @@ export const BookCheckoutPage = () => {
             currentLoansCount={currentLoansCount}
             isAuthenticated={authState?.isAuthenticated}
             isCheckedOut={isCheckedOut}
+            checkoutBook={checkoutBook}
           />
         </div>
         <hr />
@@ -263,6 +264,7 @@ export const BookCheckoutPage = () => {
           currentLoansCount={currentLoansCount}
           isAuthenticated={authState?.isAuthenticated}
           isCheckedOut={isCheckedOut}
+          checkoutBook={checkoutBook}
         />
         <hr />
         <LatestReviews reviews={reviews} bookId={book?.id} mobile={true} />
