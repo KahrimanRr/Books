@@ -125,7 +125,7 @@ export const BookCheckoutPage = () => {
         };
         const currentLoansCountResponse = await fetch(url, requestOptions);
         if (!currentLoansCountResponse.ok) {
-          throw new Error("someth wnt wrong");
+          throw new Error("someth wnt wrong with loans count");
         }
         const currentLoansCountResponseJson =
           await currentLoansCountResponse.json();

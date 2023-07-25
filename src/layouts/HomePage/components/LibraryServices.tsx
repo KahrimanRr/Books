@@ -5,8 +5,8 @@ export const LibraryServices = () => {
   const { authState } = useOktaAuth();
 
   return (
-    <div className="container my-5">
-      <div className=" row p-4 align-items-center border shadow-lg">
+    <div className="row g-0 mt-5">
+      <div className=" row  align-items-center border shadow-lg">
         <div className="col-lg-7 p-3">
           <h1 className="display-4 fw-bold">
             Can not find what you are looking for ?
@@ -23,7 +23,7 @@ export const LibraryServices = () => {
               </Link>
             ) : (
               <Link className="btn main-color btn-lg text-white" to="/login">
-                {" "}
+                Sign up
               </Link>
             )}
           </div>
