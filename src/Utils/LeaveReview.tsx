@@ -11,7 +11,7 @@ export const LeaveReview: React.FC<{}> = (props) => {
   return (
     <div className=" dropdown " style={{ cursor: "pointer" }}>
       <h5
-        className=" dropdown- toggle"
+        className=" dropdown-toggle"
         id="dropdownMenuButton1"
         data-bs-toggle="dropdown"
       >
