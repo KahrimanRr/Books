@@ -219,7 +219,6 @@ export const BookCheckoutPage = () => {
   }
 
   //adding functionality to checkout//
-
   async function checkoutBook() {
     const url = `http://localhost:8080/api/books/secure/checkout/?bookId=${bookId}`;
     const requestOptions = {
@@ -236,6 +235,7 @@ export const BookCheckoutPage = () => {
     setIsCheckedOut(true);
   }
 
+  //adding func to submit review
   async function submitReview(starInput: number, reviewDescription: string) {
     let bookId: number = 0;
     if (book?.id) {
@@ -294,6 +294,7 @@ export const BookCheckoutPage = () => {
             isCheckedOut={isCheckedOut}
             checkoutBook={checkoutBook}
             isReviewLeft={isReviewLeft}
+            submitReview={submitReview}
           />
         </div>
         <hr />
@@ -329,6 +330,7 @@ export const BookCheckoutPage = () => {
           isCheckedOut={isCheckedOut}
           checkoutBook={checkoutBook}
           isReviewLeft={isReviewLeft}
+          submitReview={submitReview}
         />
         <hr />
         <LatestReviews reviews={reviews} bookId={book?.id} mobile={true} />
