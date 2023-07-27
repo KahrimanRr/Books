@@ -22,6 +22,10 @@ export const BookCheckoutPage = () => {
   const [totalStars, setTotalStars] = useState(0);
   const [isLoadingReview, setIsLoadingReview] = useState(true);
 
+  /** review state*/
+  const [isReviewLeft, setIsReviewLeft] = useState(false);
+  const [isLoadingUserReview, setIsLoadingUserReview] = useState(true);
+
   /**added for okta */
   const { authState } = useOktaAuth();
 
@@ -110,6 +114,15 @@ export const BookCheckoutPage = () => {
       setHttpError(error.message);
     });
   }, []);
+
+  /**getting single review for user */
+  useEffect(() => {
+    const fetchUserReviewBook = async () => {};
+    fetchUserReviewBook().catch((error: any) => {
+      setIsLoadingUserReview(false);
+      setHttpError(error.message);
+    });
+  }, [authState]);
 
   //Loans count*/
   useEffect(() => {
