@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import ReviewModel from "../../../models/ReviewModel";
+import { SpinnerLoading } from "../../../Utils/SpinnerLoading";
 
 export const ReviewListPage = () => {
   const [reviews, setReviews] = useState<ReviewModel[]>([]);
@@ -53,6 +54,30 @@ export const ReviewListPage = () => {
       setHttpError(error.message);
     });
   }, [currentPage]);
+
+  if (isLoading) {
+    return <SpinnerLoading />;
+  }
+
+  if (httpError) {
+    return (
+      <div className="container m-4">
+        <p>{httpError}</p>
+      </div>
+    );
+  }
+
+  /**pagination */
+
+  const indexOfLastReview: number = currentPage * reviewsPerPage;
+  const indexOfFirstReview: number = indexOfLastReview - reviewsPerPage;
+
+  let lastItem =
+    reviewsPerPage * currentPage <= totalAmountOfReviews
+      ? reviewsPerPage * currentPage
+      : totalAmountOfReviews;
+
+  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   return <></>;
 };
