@@ -25,8 +25,9 @@ export const ShelfPage = () => {
               role="tab"
               aria-controls="nav-history"
               aria-selected="false"
-            ></button>
-            Your History
+            >
+              Your History
+            </button>
           </div>
         </nav>
         <div className="tab-content" id="nav-tabContent">
