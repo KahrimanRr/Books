@@ -16,7 +16,7 @@ export const ReviewListPage = () => {
   const [totalPages, setTotalPages] = useState(0);
 
   const bookId = window.location.pathname.split("/")[2];
-
+  /**when button is clicked to  list all reviews */
   useEffect(() => {
     const fetchBookReviews = async () => {
       const reviewUrl: string = `http://localhost:8080/api/reviews/search/findByBookId?bookId=${bookId}&page=${
