@@ -37,7 +37,7 @@ export const ShelfPage = () => {
             role="tabpanel"
             aria-labelledby="nav-loans-tab"
           >
-            <p>Loans</p>
+            Loans
           </div>
           <div
             className="tab-pane fade"
