@@ -10,6 +10,10 @@ export const Loans = () => {
   const { authState } = useOktaAuth();
   const [httpError, setHttpError] = useState(null);
 
+  /**return book */
+
+  const [checkout, setCheckout] = useState(false);
+
   //current loans
   const [shelfCurrentLoans, setShelfCurrentLoans] = useState<
     ShelfCurrentLoans[]
@@ -42,7 +46,7 @@ export const Loans = () => {
       setHttpError(error.message);
     });
     window.scrollTo(0, 0);
-  }, [authState]);
+  }, [authState, checkout]);
 
   if (isLoadingUserLoans) {
     return <SpinnerLoading />;
@@ -53,6 +57,22 @@ export const Loans = () => {
         <p>{httpError}</p>
       </div>
     );
+  }
+
+  async function returnBook(bookId: Number) {
+    const url = `http://localhost:8080/api/books/secure/return/?bookId=${bookId}`;
+    const requestOptions = {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${authState?.accessToken?.accessToken}`,
+        "Content-Type": "application/json",
+      },
+    };
+    const returnResponse = await fetch(url, requestOptions);
+    if (!returnResponse.ok) {
+      throw new Error("something went wrong with returnBook");
+    }
+    setCheckout(!checkout);
   }
   return (
     <div>
@@ -132,6 +152,7 @@ export const Loans = () => {
                 <LoansModal
                   shelfCurrentLoan={shelfCurrentLoan}
                   mobile={false}
+                  returnBook={returnBook}
                 />
               </div>
             ))}
