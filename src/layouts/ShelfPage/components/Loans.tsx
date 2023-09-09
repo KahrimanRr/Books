@@ -74,6 +74,22 @@ export const Loans = () => {
     }
     setCheckout(!checkout);
   }
+
+  async function renewLoan(bookId: Number) {
+    const url = `http://localhost:8080/api/books/secure/renew/loan/?bookId=${bookId}`;
+    const requestOptions = {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${authState?.accessToken?.accessToken}`,
+        "Content-Type": "application/json",
+      },
+    };
+    const returnResponse = await fetch(url, requestOptions);
+    if (!returnResponse.ok) {
+      throw new Error("something went wrong with renewLoans");
+    }
+    setCheckout(!checkout);
+  }
   return (
     <div>
       <div className="d-none d-lg-block mt-2">
@@ -153,6 +169,7 @@ export const Loans = () => {
                   shelfCurrentLoan={shelfCurrentLoan}
                   mobile={false}
                   returnBook={returnBook}
+                  renewLoan={renewLoan}
                 />
               </div>
             ))}
