@@ -16,7 +16,28 @@ export const HistoryPafe = () => {
   const [totalPages, setTotalPages] = useState(0);
 
   useEffect(() => {
-    const fetchHistory = async () => {};
+    const fetchHistory = async () => {
+      if (authState && authState?.isAuthenticated) {
+        const url = `http://localhost:8080/api/histories/search/findBooksbyUserEmail/?userEmail=${
+          authState.accessToken?.claims.sub
+        }&page=${currentPage - 1}$size=5`;
+        const requestOptions = {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${authState.accessToken?.accessToken}`,
+            "Content-Type": "application/json",
+          },
+        };
+        const historyResponse = await fetch(url, requestOptions);
+        if (!historyResponse.ok) {
+          throw new Error("Something went wrong with history");
+        }
+        const historyResponseJson = await historyResponse.json();
+        setHistories(historyResponseJson._embedded.histories);
+        setTotalPages(historyResponseJson.page.totalPages);
+      }
+      setIsLoadingHistory(false);
+    };
     fetchHistory().catch((error: any) => {
       setIsLoadingHistory(false);
       setHttpError(error.message);
@@ -37,5 +58,10 @@ export const HistoryPafe = () => {
 
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
-  return <></>;
+  return <div className="mt-2">
+    {history.length > 0 ? 
+    <>
+    </>}
+    
+  </div>;
 };
